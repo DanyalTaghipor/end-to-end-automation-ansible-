@@ -1,0 +1,10 @@
+- name: Get Package Manager
+  debug:
+    var: ansible_pkg_mgr
+
+- name: Package Manager
+  debug:
+    msg: "{{ ansible_pkg_mgr }}"
+
+- set_fact:
+    server_package_manager: "{{ ansible_pkg_mgr }}"
