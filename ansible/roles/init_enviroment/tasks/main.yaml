@@ -1,0 +1,31 @@
+- name: Install Required Pakages To Run App (apt)
+  tags: install_pakages
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items: 
+    - "{{ required_packages }}"
+  when: server_package_manager == "apt"
+
+- name: Install Required Pakages To Run App (yum)
+  tags: install_pakages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items: 
+    - "{{ required_packages }}"
+  when: server_package_manager == "yum"
+
+- name: Install Virtualenv Via PIP
+  pip:
+    name: virtualenv
+    executable: pip3
+
+- name: Create Python Virtual Environment and Install Requirements
+  pip:
+    virtualenv: "{{ remote_path_for_repo }}/venv"
+    virtualenv_site_packages: no
+    requirements: "{{ remote_path_for_repo }}/requirements.txt"
+    virtualenv_command: 'python3 -m virtualenv'
+
+
