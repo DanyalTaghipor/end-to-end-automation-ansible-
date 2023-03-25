@@ -1,0 +1,27 @@
+- name: Check If Git Is Installed
+  command: git --version
+  register: git_check
+  ignore_errors: true
+
+- name: Install Git
+  package:
+    name: git
+    state: present
+  when: git_check.rc != 0
+
+- name: Remove Git Project Directory (If Exist)
+  become: true
+  file:
+    path: "{{ remote_path_for_repo }}"
+    state: absent
+
+- name: Clone Binance Scraper Project
+  git:
+    repo: "{{ repo_address }}"
+    dest: "{{ remote_path_for_repo }}"
+    single_branch: yes
+    version: main
+
+- name: Change Repo's DIR Files Owner
+  command: "sudo chown {{ ansible_user }} {{ remote_path_for_repo }}"
+
