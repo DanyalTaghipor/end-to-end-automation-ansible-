@@ -10,5 +10,5 @@ output "ami_ssh_user" {
 
 output "aws_instance_public_ip" {
   description = "The Public IP of Instance"
-  value       = aws_instance.ansible.public_ip
+  value       = aws_instance.ansible.*.public_ip
 }
