@@ -23,5 +23,4 @@
     version: main
 
 - name: Change Repo's DIR Files Owner
-  command: "sudo chown {{ ansible_user }} {{ remote_path_for_repo }}"
-
+  command: "sudo chown {{ lookup('env', 'USER') }} {{ remote_path_for_repo }}"
